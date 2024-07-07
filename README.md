@@ -41,20 +41,18 @@ Contributions are welcome! If you'd like to contribute:
    git clone https://github.com/your-username/Sorting-Visualization.git
    
 2. Create your feature branch:
-  ```bash
+   ```bash
    git checkout -b feature/YourFeature
-
-3. Commit your changes
-  ```bash
-   git commit -am 'Add some feature'
-  
-4. Push to the branch
-  ```bash
+   
+3. Commit your changes:
+   ```bash
+   git commit -am 'Add some feature':
+   
+4. Push to the branch:
+   ```bash
    git push origin feature/YourFeature
- 
 
-
-### Notes:
+## Notes:
 - Replace `your-username` in the clone URL with your GitHub username or repository URL.
 - Ensure that the numbered list for contributing steps is clear and correctly formatted for Bash commands.
 - Markdown syntax (`##` for headings, `-` for bullet points) is used for content sections (`Usage`, `Contributing`, etc.).
