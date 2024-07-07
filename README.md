@@ -20,12 +20,13 @@ To run the project locally:
    ```bash
    git clone https://github.com/your-username/Sorting-Visualization.git
    ```bash
+   
 2. Open the project directory:
    ```bash
    cd Sorting-Visualization
    ```bash
+   
 3. Open index.html in your web browser.
-
 
 ## Usage
 
