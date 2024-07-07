@@ -2,7 +2,8 @@
 
 This project aims to visually demonstrate various sorting algorithms in action. It provides an interactive way to understand how different sorting techniques operate, step by step.
 
-![image](https://github.com/sohaum/Sorting-Visualization/assets/127203784/e0c06d37-766b-4b04-8f0a-c6d80dee528c)
+![image](https://github.com/sohaum/Sorting-Visualization/assets/127203784/412b05b6-95fe-466b-a9f2-70903eaf4602)
+
 
 ## Features
 
