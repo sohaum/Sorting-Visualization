@@ -1,0 +1,185 @@
+/* Reset and general styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    font-size: 16px; /* Base font size for readability */
+}
+
+/* Container styles */
+.container {
+    text-align: center;
+    width: 90%; /* Adjust maximum width for responsiveness */
+    max-width: 1000px; /* Increase for larger screens if necessary */
+    margin: 20px auto; /* Center container horizontally with auto margin */
+    box-sizing: border-box; /* Include padding and borders in width calculation */
+}
+
+/* Controls styles */
+.controls {
+    margin-bottom: 20px;
+}
+
+.controls button {
+    padding: 8px 16px; /* Adjust button padding for smaller screens */
+    margin: 5px;
+    font-size: 14px; /* Adjust button font size for smaller screens */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.controls button:hover {
+    background-color: #45a049;
+}
+
+/* Array container styles */
+.array-container {
+    position: relative;
+    width: 90%; /* Adjust container width for responsiveness */
+    max-width: 1000px; /* Ensure it doesn't exceed a certain width on larger screens */
+    margin: 20px auto; /* Center horizontally */
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.y-axis {
+    position: absolute;
+    left: -20px; /* Adjust position to be beside bars */
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column-reverse; /* Reverse order to match heights */
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-right: 5px; /* Space between bars and labels */
+}
+
+.y-axis-label {
+    font-size: 12px;
+    color: #555;
+}
+
+.bar {
+    position: relative;
+    width: 25px; /* Adjust width of bars */
+    margin: 0 1px; /* Adjust margin between bars */
+    background-color: #2196F3;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.bar-value {
+    position: absolute;
+    bottom: 5px; /* Adjust vertical position as needed */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    font-size: 10px; /* Adjust font size for smaller screens */
+    color: white; /* Text color */
+}
+
+.bar-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 2px; /* Adjust margin between bars */
+}
+
+.value-below {
+    position: absolute;
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+    font-size: 10px; /* Adjust font size for smaller screens */
+    color: black; /* Adjust text color */
+}
+
+/* Animation for sorting */
+.bar-swap {
+    transition: height 0.3s, background-color 0.3s;
+}
+
+/* Adjust bar height dynamically */
+.bar-height-1 { height: 20px; }
+.bar-height-2 { height: 40px; }
+.bar-height-3 { height: 60px; }
+.bar-height-4 { height: 80px; }
+.bar-height-5 { height: 100px; }
+.bar-height-6 { height: 120px; }
+.bar-height-7 { height: 140px; }
+.bar-height-8 { height: 160px; }
+.bar-height-9 { height: 180px; }
+.bar-height-10 { height: 200px; }
+.bar-height-11 { height: 220px; }
+.bar-height-12 { height: 240px; }
+.bar-height-13 { height: 260px; }
+.bar-height-14 { height: 280px; }
+.bar-height-15 { height: 300px; }
+/* Add more classes for different heights as needed */
+
+/* Complexity display styles */
+.complexity {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.complexity h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#complexityDisplay {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: pre-line; /* Preserve line breaks */
+    max-height: 200px; /* Adjust max height as needed */
+    overflow-y: auto; /* Enable vertical scroll if needed */
+}
+
+/* Original array styles */
+.original-array {
+    margin-bottom: 20px;
+}
+
+.original-array h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        width: 95%; /* Adjust width for smaller screens */
+    }
+
+    .array-container {
+        width: 95%; /* Adjust width for smaller screens */
+        height: auto; /* Allow height to adjust */
+    }
+
+    .y-axis {
+        left: -10px; /* Further adjust position for smaller screens */
+        padding-right: 2px; /* Further adjust padding for smaller screens */
+    }
+
+    .bar {
+        width: 12px; /* Adjust width of bars for smaller screens */
+        margin: 0 1px; /* Adjust margin between bars */
+    }
+
+    .bar-value,
+    .value-below {
+        font-size: 10px; /* Adjust font size for smaller screens */
+    }
+
+    .controls button {
+        padding: 8px 12px; /* Adjust button padding for smaller screens */
+        font-size: 12px; /* Adjust button font size for smaller screens */
+    }
+}
