@@ -19,7 +19,7 @@ To run the project locally:
 1. Clone this repository:
    ```bash
    git clone https://github.com/your-username/Sorting-Visualization.git
-   
+
 2. Open the project directory:
    ```bash
    cd Sorting-Visualization
