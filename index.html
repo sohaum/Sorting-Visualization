@@ -9,6 +9,8 @@
 <body>
     <div class="container">
         <h1>Sorting Visualizer</h1>
+        <input type="range" id="speedSlider" min="10" max="1000" value="100" class="slider">
+        <label for="speedSlider">Animation Speed</label>
         <div class="controls">
             <button id="generateButton" onclick="generateArray()">Generate New Array</button>
             <button onclick="sortArray('bubble')">Bubble Sort</button>

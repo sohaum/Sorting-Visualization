@@ -1,8 +1,13 @@
 let array = []; // Array to be sorted
-const animationSpeed = 10; // Speed of animation in milliseconds
+let animationSpeed = 10; // Speed of animation in milliseconds, default value
 let comparisons = 0;
 let swaps = 0;
 let sorted = false; // Flag to track if array is sorted
+
+// Function to handle slider change
+document.getElementById('speedSlider').addEventListener('input', function() {
+    animationSpeed = 110 - this.value; // Adjust animation speed inversely with slider value (higher value means slower animation)
+});
 
 // Function to generate a new random array
 function generateArray() {
@@ -26,7 +31,6 @@ function generateArray() {
 
     displayOriginalArray(array);
     displayArray(array);
-
 
     // Reset counters display
     updateStepCount();
@@ -181,18 +185,25 @@ async function selectionSort(arr) {
 // Merge Sort
 async function mergeSort(arr) {
     if (arr.length <= 1) {
-        console.log(arr);
         return arr;
     }
 
     const mid = Math.floor(arr.length / 2);
-    const left = await mergeSort(arr.slice(0, mid));
-    const right = await mergeSort(arr.slice(mid));
+    const left = arr.slice(0, mid);
+    const right = arr.slice(mid);
 
-    return await merge(left, right); // Ensure to await merge function
+    const sortedLeft = await mergeSort(left);
+    const sortedRight = await mergeSort(right);
+
+    const mergedArray = await merge(sortedLeft, sortedRight, arr);
+
+    // Display the sorted array
+    displayArray(mergedArray); // Update display after merging
+
+    return mergedArray;
 }
 
-async function merge(left, right) {
+async function merge(left, right, arr) {
     let result = [];
     let leftIndex = 0;
     let rightIndex = 0;
@@ -205,11 +216,40 @@ async function merge(left, right) {
             result.push(right[rightIndex]);
             rightIndex++;
         }
-        await sleep(animationSpeed); // Optional: Add animation delay
+
+        // Visualize comparison
+        visualizeComparison(leftIndex - 1, rightIndex - 1);
+        await sleep(animationSpeed);
     }
 
-    // Concatenate any remaining elements from left and right arrays
-    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+    // Push remaining elements from left and right arrays
+    while (leftIndex < left.length) {
+        result.push(left[leftIndex]);
+        leftIndex++;
+
+        // Visualize comparison
+        visualizeComparison(leftIndex - 1, rightIndex - 1);
+        await sleep(animationSpeed);
+    }
+
+    while (rightIndex < right.length) {
+        result.push(right[rightIndex]);
+        rightIndex++;
+
+        // Visualize comparison
+        visualizeComparison(leftIndex - 1, rightIndex - 1);
+        await sleep(animationSpeed);
+    }
+
+    // Copy sorted elements back to original array
+    for (let i = 0; i < result.length; i++) {
+        arr[i] = result[i];
+        // Visualize swap (optional)
+        visualizeSwap(i, i); // Visualize swap with itself as no real swap occurs
+        await sleep(animationSpeed);
+    }
+
+    return result; // Return the merged array
 }
 
 // Quick Sort
@@ -228,7 +268,6 @@ async function partition(arr, left, right) {
     let pivotIndex = left;
 
     for (let i = left; i < right; i++) {
-        comparisons++;
         updateStepCount();
 
         // Visualize comparison
@@ -236,27 +275,31 @@ async function partition(arr, left, right) {
         await sleep(animationSpeed);
 
         if (arr[i].value < pivotValue) {
-            // Swap elements
-            [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
-            swaps++;
-            updateStepCount();
+            // Swap elements only if necessary
+            if (i !== pivotIndex) {
+                [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
+                swaps++; // Increment swaps only when elements are swapped
+                updateStepCount();
 
-            // Visualize swap
-            visualizeSwap(i, pivotIndex);
-            await sleep(animationSpeed);
+                // Visualize swap
+                visualizeSwap(i, pivotIndex);
+                await sleep(animationSpeed);
+            }
 
             pivotIndex++;
         }
     }
 
     // Swap pivot with pivotIndex
-    [arr[pivotIndex], arr[right]] = [arr[right], arr[pivotIndex]];
-    swaps++;
-    updateStepCount();
+    if (right !== pivotIndex && arr[right].value !== arr[pivotIndex].value) {
+        [arr[pivotIndex], arr[right]] = [arr[right], arr[pivotIndex]];
+        swaps++; // Increment swaps for the final pivot swap
+        updateStepCount();
 
-    // Visualize swap
-    visualizeSwap(pivotIndex, right);
-    await sleep(animationSpeed);
+        // Visualize swap
+        visualizeSwap(pivotIndex, right);
+        await sleep(animationSpeed);
+    }
 
     return pivotIndex;
 }
@@ -345,7 +388,7 @@ async function cyclicSort(arr) {
         let correctIndex = arr[i].value - 1;
 
         // Ensure values are within the correct range (1 to n)
-        if (correctIndex >= 0 && correctIndex < arr.length && arr[i].value !== arr[correctIndex].value) {
+        if (arr[i].value !== arr[correctIndex].value) {
             // Visualize comparison
             visualizeComparison(i, correctIndex);
             await sleep(animationSpeed);
@@ -361,13 +404,17 @@ async function cyclicSort(arr) {
             // Visualize swap
             visualizeSwap(i, correctIndex);
             await sleep(animationSpeed);
-        } else {
-            i++;
+
+            // After swap, re-check current position
+            i--;
         }
+
+        i++; // Move to the next element in the array
     }
 
     updateStepCount(); // Final update for the counters after sorting
 }
+
 
 // Radix Sort
 async function radixSort(arr) {
@@ -379,19 +426,23 @@ async function radixSort(arr) {
         for (let i = 0; i < arr.length; i++) {
             let digit = getDigit(arr[i].value, k);
             digitBuckets[digit].push(arr[i]);
+            comparisons++; // Count comparison for each element processed
             visualizeComparison(i, i); // Visualize comparison
             await sleep(animationSpeed);
-            comparisons++;
         }
 
+        // Flatten digit buckets into the new order
         arr = [].concat(...digitBuckets);
+
+        // Visualize the current state of the array
         displayArray(arr);
         await sleep(animationSpeed); // Optional delay for visualization
     }
-    comparisons++;
-    updateStepCount();
+
+    updateStepCount(); // Update step count after sorting completes
     return arr;
 }
+
 
 // Helper function to get the maximum number of digits in the array
 function getMaxDigitCount(arr) {
