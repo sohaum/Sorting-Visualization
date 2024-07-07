@@ -20,11 +20,9 @@ To run the project locally:
    ```bash
    git clone https://github.com/your-username/Sorting-Visualization.git
    
-   
 2. Open the project directory:
    ```bash
    cd Sorting-Visualization
-   
    
 3. Open index.html in your web browser.
 
@@ -41,19 +39,19 @@ Contributions are welcome! If you'd like to contribute:
 1. Fork the repository.
    ```bash
    git clone https://github.com/your-username/Sorting-Visualization.git
-  ```bash
+   
 2. Create your feature branch:
   ```bash
    git checkout -b feature/YourFeature
-  ```bash
+
 3. Commit your changes
   ```bash
    git commit -am 'Add some feature'
-  ```bash
+  
 4. Push to the branch
   ```bash
    git push origin feature/YourFeature
-  ```bash
+ 
 
 
 ### Notes:
