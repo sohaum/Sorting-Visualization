@@ -184,73 +184,65 @@ async function selectionSort(arr) {
 
 // Merge Sort
 async function mergeSort(arr) {
-    if (arr.length <= 1) {
-        return arr;
-    }
-
-    const mid = Math.floor(arr.length / 2);
-    const left = arr.slice(0, mid);
-    const right = arr.slice(mid);
-
-    const sortedLeft = await mergeSort(left);
-    const sortedRight = await mergeSort(right);
-
-    const mergedArray = await merge(sortedLeft, sortedRight, arr);
-
-    // Display the sorted array
-    displayArray(mergedArray); // Update display after merging
-
-    return mergedArray;
+    comparisons = 0;
+    swaps = 0;
+    await mergeSortHelper(arr, 0, arr.length - 1);
+    updateStepCount(); // Final update for the counters after sorting
 }
 
-async function merge(left, right, arr) {
-    let result = [];
-    let leftIndex = 0;
-    let rightIndex = 0;
+async function mergeSortHelper(arr, left, right) {
+    if (left >= right) {
+        return;
+    }
 
-    while (leftIndex < left.length && rightIndex < right.length) {
-        if (left[leftIndex].value < right[rightIndex].value) {
-            result.push(left[leftIndex]);
-            leftIndex++;
+    const middle = Math.floor((left + right) / 2);
+    await mergeSortHelper(arr, left, middle);
+    await mergeSortHelper(arr, middle + 1, right);
+    await merge(arr, left, middle, right);
+}
+
+async function merge(arr, left, middle, right) {
+    const leftArr = arr.slice(left, middle + 1);
+    const rightArr = arr.slice(middle + 1, right + 1);
+
+    let i = 0;
+    let j = 0;
+    let k = left;
+
+    while (i < leftArr.length && j < rightArr.length) {
+        comparisons++;
+        visualizeComparison(left + i, middle + 1 + j); // Visualize comparison
+        await sleep(animationSpeed);
+
+        if (leftArr[i].value <= rightArr[j].value) {
+            arr[k] = leftArr[i];
+            i++;
         } else {
-            result.push(right[rightIndex]);
-            rightIndex++;
+            arr[k] = rightArr[j];
+            j++; swaps++;
         }
-
-        // Visualize comparison
-        visualizeComparison(leftIndex - 1, rightIndex - 1);
-        await sleep(animationSpeed);
+        k++;
     }
 
-    // Push remaining elements from left and right arrays
-    while (leftIndex < left.length) {
-        result.push(left[leftIndex]);
-        leftIndex++;
-
-        // Visualize comparison
-        visualizeComparison(leftIndex - 1, rightIndex - 1);
-        await sleep(animationSpeed);
+    while (i < leftArr.length) {
+        arr[k] = leftArr[i];
+        i++;
+        k++;
     }
 
-    while (rightIndex < right.length) {
-        result.push(right[rightIndex]);
-        rightIndex++;
-
-        // Visualize comparison
-        visualizeComparison(leftIndex - 1, rightIndex - 1);
-        await sleep(animationSpeed);
+    while (j < rightArr.length) {
+        arr[k] = rightArr[j];
+        j++;
+        k++;
     }
 
-    // Copy sorted elements back to original array
-    for (let i = 0; i < result.length; i++) {
-        arr[i] = result[i];
-        // Visualize swap (optional)
-        visualizeSwap(i, i); // Visualize swap with itself as no real swap occurs
-        await sleep(animationSpeed);
-    }
+    // Visualize merged array
+    displayArray(arr);
+    await sleep(animationSpeed);
 
-    return result; // Return the merged array
+    updateStepCount(); // Update counters during the merge step
 }
+
 
 // Quick Sort
 async function quickSort(arr, left = 0, right = arr.length - 1) {
@@ -377,7 +369,6 @@ async function heapify(arr, n, i) {
     updateStepCount(); // Update step count after each heapify operation
 }
 
-
 // Cyclic Sort
 async function cyclicSort(arr) {
     let i = 0;
@@ -388,7 +379,7 @@ async function cyclicSort(arr) {
         let correctIndex = arr[i].value - 1;
 
         // Ensure values are within the correct range (1 to n)
-        if (arr[i].value !== arr[correctIndex].value) {
+        if (arr[i].value >= 1 && arr[i].value <= arr.length && arr[i].value !== arr[correctIndex].value) {
             // Visualize comparison
             visualizeComparison(i, correctIndex);
             await sleep(animationSpeed);
@@ -415,11 +406,10 @@ async function cyclicSort(arr) {
     updateStepCount(); // Final update for the counters after sorting
 }
 
-
 // Radix Sort
 async function radixSort(arr) {
     let maxDigitCount = getMaxDigitCount(arr);
-    
+
     for (let k = 0; k < maxDigitCount; k++) {
         let digitBuckets = Array.from({ length: 10 }, () => []);
 
@@ -627,5 +617,6 @@ async function sortArray(algorithm) {
 document.getElementById('generateButton').addEventListener('click', function() {
     generateArray();
 });
+
 // Initial array generation and display on page load
 generateArray();
